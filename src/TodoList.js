@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TodoList = () => (
+const TodoList = props => (
   <table>
     <thead>
       <tr>
@@ -10,14 +10,22 @@ const TodoList = () => (
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Task data</td>
-        <td>Notes data</td>
+      {props.todos.length > 0 ? (
+        props.todos.map(todo => (
+          <tr key={todo.id}>
+            <td>{todo.task}</td>
+            <td>{todo.notes}</td>
         <td>
-          <button className="button muted-button">Edit</button>
-          <button className="button muted-button">Delete</button>
+          <button onClick = {() => props.editRow(todo)} className="button muted-button">Edit</button>
+          <button onClick = {() => props.delTask(todo.id)} className="button muted-button">Delete</button>
         </td>
       </tr>
+      ))
+      ) : (
+        <tr>
+          <td colSpan={3}>No users</td>
+        </tr>
+      )}
     </tbody>
   </table>
 )
