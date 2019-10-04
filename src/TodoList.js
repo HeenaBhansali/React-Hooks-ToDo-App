@@ -16,8 +16,9 @@ const TodoList = props => (
             <td>{todo.task}</td>
             <td>{todo.notes}</td>
         <td>
-          <button onClick = {() => props.editRow(todo)} className="button muted-button">Edit</button>
-          <button onClick = {() => props.delTask(todo.id)} className="button muted-button">Delete</button>
+          <button onClick = {() => props.editRow(todo)}>Edit</button>
+          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          <button onClick = {() => props.delTask(todo.id)}>Delete</button>
         </td>
       </tr>
       ))

@@ -26,8 +26,10 @@ return (
       <input type="text" name="task" value={task.task} onChange={handleInputChange} />
       <label>Notes</label>
       <input type="text" name="notes" value={task.notes} onChange={handleInputChange} />
+      <br/><br/>
       <button>Update Task</button>
-      <button onClick={() => props.setEditing(false)} className="button muted-button">
+      &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+      <button onClick={() => props.setEditing(false)}>
         Cancel
       </button>
     </form>
