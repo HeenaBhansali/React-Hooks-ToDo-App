@@ -14,7 +14,8 @@ const createTable = async () => {
             task varchar(30),
             notes varchar(100),
             due_date date,
-            priority char(10)
+            priority char(10),
+            status boolean,
             );
             `)
     } catch (error) {
@@ -25,7 +26,7 @@ const createTable = async () => {
 
 const inserIntoTable = async (task, notes) => {
     try {
-        let result = await pool.query(`insert into todo (task, notes) values ('${task}', '${notes}') returning id;`)
+        let result = await pool.query(`insert into todo (task, notes, status) values ('${task}', '${notes}', false) returning id;`)
         return result
     } catch (error) {
         console.log('unable to insert task into table', error)
@@ -41,24 +42,47 @@ const getTask = async () => {
     }
 }
 
-const updateTask = async (id, colName, task) => {
+const updateTask = async (id, task, notes) => {
     const updateQuery = {
-        text: 'update todo set ' + colName +' = $1 where id = $2',
-        values: [task, id]
+        text: 'update todo set task = $1, notes = $2 where id = $3 returning *',
+        values: [task, notes, id]
  }
    try {
-    await pool.query(updateQuery)
+    let result = await pool.query(updateQuery)
+    return result
    } catch (error) {
        console.log('unable to update task', error)
    } 
   
 }
 
-createTable()
-inserIntoTable('learn postgres', 'hgjhg')
-getTask()
-updateTask('8', 'task', 'learn hooks')
-getTask()
+const taskStatus = async (id, status) => {
+    const statusQuery = {
+        text: 'update todo set status = $1 where id = $2 returning *',
+        values: [status, id]
+ }
+   try {
+    let result = await pool.query(statusQuery)
+    return result
+   } catch (error) {
+       console.log('unable to set status', error)
+   } 
+  
+}
+
+
+const deleteTask = async (id) => {
+    const deleteQuery = {
+        text: 'delete from todo where id = $1',
+        values: [id]
+ }
+ try {
+    let result = await pool.query(deleteQuery)
+    return result
+   } catch (error) {
+       console.log('unable to delete task', error)
+   }                                                                       
+}
 
 module.exports = {
     createTable,
@@ -66,4 +90,6 @@ module.exports = {
     getTask,
     inserIntoTable,
     createTable,
+    deleteTask, 
+    taskStatus
 }

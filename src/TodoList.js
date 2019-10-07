@@ -1,6 +1,10 @@
 import React from 'react'
 
-const TodoList = props => (
+const TodoList = props =>{
+  // console.log(props.todos)
+  // const toggleTask = props.status ? "Done" : "Not Done"
+
+  return(
   <table>
     <thead>
       <tr>
@@ -19,16 +23,20 @@ const TodoList = props => (
           <button onClick = {() => props.editRow(todo)}>Edit</button>
           &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           <button onClick = {() => props.delTask(todo.id)}>Delete</button>
+          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          <button onClick = {() => props.completeTask(todo)}>{todo.status ? "Done" : "Not Done"}</button>
+        
         </td>
       </tr>
       ))
       ) : (
         <tr>
-          <td colSpan={3}>No users</td>
+          <td colSpan={3}>No todos</td>
         </tr>
       )}
     </tbody>
   </table>
 )
+      }
 
 export default TodoList
