@@ -19,12 +19,12 @@ const CreateTask = props => {
         setList(initialFormState)
       }}
     >
-      <label>Task</label>
-      <input type="text" name="task" value={list.task} onChange={handleInputChange} />
-      <label>Notes</label>
-      <input type="text" name="notes" value={list.notes} onChange={handleInputChange} />
-      <label>Due Date</label>
-      <input type="date" name="duedate" value={list.duedate} onChange={handleInputChange} />
+      <input type="text" name="task" placeholder="Task" value={list.task} onChange={handleInputChange} />
+      <input type="text" name="notes" placeholder="Notes" value={list.notes} onChange={handleInputChange} />
+      <div class="flex-container">
+      <div class= "flex-1"><label>Due Date</label></div>
+      <div><input type="date" name="duedate" value={list.duedate} onChange={handleInputChange} /></div>
+      </div>
       <label><button>Add new list</button></label>
     </form>
   )

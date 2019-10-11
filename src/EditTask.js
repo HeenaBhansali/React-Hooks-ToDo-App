@@ -22,16 +22,15 @@ return (
         props.updateTask(task.id, task)
       }}
     >
-      <label>Task</label>
-      <input type="text" name="task" value={task.task} onChange={handleInputChange} />
-      <label>Notes</label>
-      <input type="text" name="notes" value={task.notes} onChange={handleInputChange} />
-      <label>Due Date</label>
-      <input type="date" name="duedate" value={task.duedate} onChange={handleInputChange} />
-      <br/><br/>
+      <input type="text" name="task" placeholder="Task" value={task.task} onChange={handleInputChange} />
+      <input type="text" name="notes" placeholder="Notes" value={task.notes} onChange={handleInputChange} />
+      <div class="flex-container">
+      <div class= "flex-1"><label>Due Date</label></div>
+      <div><input type="date" name="duedate" value={task.duedate} onChange={handleInputChange} /></div>
+      </div>
       <button>Update Task</button>
       &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-      <button onClick={() => props.setEditing(false)}>
+      <button class="cancelbtn" onClick={() => props.setEditing(false)}>
         Cancel
       </button>
     </form>

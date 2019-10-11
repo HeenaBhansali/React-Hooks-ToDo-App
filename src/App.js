@@ -123,7 +123,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>TODO App </h1>
+      <h1>TODOs </h1>
       <div>
         <div>
           {editing ? (
@@ -139,14 +139,16 @@ const App = () => {
             </div>
           ) : (
               <div>
-                <h2>Add task</h2>
+                {/* <h2>Add task</h2> */}
                 <CreateTask addTask={addTask} />
               </div>
             )}
         </div>
         <div >
-          <h2>View tasks</h2>
-          <Filter filter={filter} setFilter={setFilter} />
+        <div class="flex-container">
+          <div class="flex-1"><label>View tasks</label></div>
+         <div> <Filter filter={filter} setFilter={setFilter} /></div>
+         </div>
             <TodoList todos={filteredList} delTask={delTask} editRow={editRow} completeTask={completeTask} />
         </div>
       </div>

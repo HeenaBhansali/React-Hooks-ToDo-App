@@ -22,11 +22,11 @@ const TodoList = props =>{
             <td>{todo.notes}</td>
             <td>{todo.duedate.slice(0,10)}</td>
         <td>
-          <button onClick = {() => props.editRow(todo)}>Edit</button>
+          <button class="editbtn"onClick = {() => props.editRow(todo)}>Edit</button>
           &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           <button onClick = {() => props.delTask(todo.id)}>Delete</button>
           &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-          <button onClick = {() => props.completeTask(todo)}>{todo.status ? "Done" : "Not Done"}</button>
+          <button class="completebtn"onClick = {() => props.completeTask(todo)}>{todo.status ? "Done" : "Not Done"}</button>
         
         </td>
       </tr>

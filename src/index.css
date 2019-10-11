@@ -1,6 +1,16 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body, input, button {
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
-  color: #404040
- }
+  background: #1abc9c;
+  color: #404040;
+}
 
 .container {
     width: 50%;
@@ -8,6 +18,10 @@ body {
     padding: 20px;
     background-color: #fff;
     border-radius: 15px;
+}
+h1{
+font-family: Pacifico,cursive;
+color: #1abc9c;
 }
 
 /* .button{
@@ -24,36 +38,51 @@ body {
     line-height: 1; } */
 
 button:hover{
-  border: 1px solid #0250bc;
-  background: #0250bc;
-  color: #ffffff;
+  background: #0b5a4a;
+  text-decoration: none; }
+
+button:nth-child(odd):hover{
+  background: #a33427;
   text-decoration: none; }
 
 button{
-  border: 1px solid #0366EE;
+  background: #16a085;
+  color: #fff;
   border-radius: 10px;
-  background: transparent;
-  border: 1px solid #cdcdcd;
-  color: #4e4e4e;
   font-weight: 600;
-  font-size: 1rem;
   padding: .75rem 1.25rem;
   margin: 0 0 .5rem 0;
-  text-align: center;
   cursor: pointer;
   line-height: 1; }
+
+  
 /* 
 textarea {
   overflow: auto;
   height: auto; } */
 
 label {
+  font-weight: bolder;
+} 
+input[type=text]{
   font-weight: 600;
-  max-width: 100%;
+  width: 100%;
   display: block;
   margin: 1rem 0 .5rem; 
+  padding: 5px;
+  border: 2px solid #16a085;
 }
 
+input, select{
+  border: 2px solid #16a085
+}
+.flex-container {
+  display: flex;
+  margin: 1rem 0 .5rem;
+}
+.flex-1 {
+  width: 80%;
+}
 
 table {
   border-spacing: 0;
@@ -67,9 +96,21 @@ th {
   padding: .5rem;
  }
 
-
+ tbody > tr {
+  color: #065848;
+}
 td {
+  /* color: #257565; */
   border-bottom: 1px solid #dedede;
   text-align: left;
   padding: .5rem;
 }
+tbody > tr:nth-child(odd) {
+  color: #a33427;;
+}
+
+.editbtn, .completebtn, .cancelbtn{
+  background: #e74c3c;
+
+}
+
