@@ -23,6 +23,8 @@ const CreateTask = props => {
       <input type="text" name="task" value={list.task} onChange={handleInputChange} />
       <label>Notes</label>
       <input type="text" name="notes" value={list.notes} onChange={handleInputChange} />
+      <label>Due Date</label>
+      <input type="date" name="duedate" value={list.duedate} onChange={handleInputChange} />
       <label><button>Add new list</button></label>
     </form>
   )

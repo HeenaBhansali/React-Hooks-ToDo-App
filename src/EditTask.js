@@ -26,6 +26,8 @@ return (
       <input type="text" name="task" value={task.task} onChange={handleInputChange} />
       <label>Notes</label>
       <input type="text" name="notes" value={task.notes} onChange={handleInputChange} />
+      <label>Due Date</label>
+      <input type="date" name="duedate" value={task.duedate} onChange={handleInputChange} />
       <br/><br/>
       <button>Update Task</button>
       &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;

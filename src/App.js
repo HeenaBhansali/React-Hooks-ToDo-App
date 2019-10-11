@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import TodoList from './TodoList'
 import CreateTask from './CreateTask'
 import EditTask from './EditTask'
+import Filter from './Filter'
 
 const App = () => {
 
@@ -11,6 +12,8 @@ const App = () => {
   const [editing, setEditing] = useState(false)
   const initialFormState = { id: null, task: '', notes: '' }
   const [currentTask, setCurrentTask] = useState(initialFormState)
+  const [filter, setFilter] = useState("all")
+
 
   function fetchData() {
     fetch("http://localhost:3001/todos")
@@ -33,7 +36,8 @@ const App = () => {
       body: JSON.stringify({
         id: '',
         task: todo.task,
-        notes: todo.notes
+        notes: todo.notes,
+        duedate: todo.duedate
       })
     })
       .then(resp => resp.json())
@@ -59,7 +63,7 @@ const App = () => {
 
   const editRow = todo => {
     setEditing(true)
-    setCurrentTask({ id: todo.id, task: todo.task, notes: todo.notes })
+    setCurrentTask({ id: todo.id, task: todo.task, notes: todo.notes, duedate: todo.duedate })
   }
 
   const updateTask = (id, updatedTask) => {
@@ -72,9 +76,10 @@ const App = () => {
       },
       body: JSON.stringify({
         task: updatedTask.task,
-        notes : updatedTask.notes,
+        notes: updatedTask.notes,
+        duedate: updatedTask.duedate
+      })
     })
-  })
       .then(resp => resp.json())
       .then(data => {
         setTodos(todos.map(todo => (todo.id === id ? updatedTask : todo)))
@@ -83,8 +88,8 @@ const App = () => {
   }
 
   const completeTask = (todo) => {
-    console.log("todo",todo)
-    const {id, status} = todo
+    console.log("todo", todo)
+    const { id, status } = todo
     setEditing(false)
     fetch(`http://localhost:3001/todos/status/${id}`, {
       method: "PUT",
@@ -92,19 +97,29 @@ const App = () => {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      
+
       body: JSON.stringify({
         status: !status
+      })
     })
-  })
       .then(resp => resp.json())
       .then(data => {
         setTodos(todos.map(todo => {
-          if(todo.id===id)  todo.status = !status
+          if (todo.id === id) todo.status = !status
           return todo
         })
-          )} 
-       ) }
+        )
+      }
+      )
+  }
+
+  const filteredList = todos.filter(
+    todo =>
+      filter === "all" ||
+      (filter === "done" && todo.status) ||
+      (filter === "pending" && !todo.status)
+  )
+
 
   return (
     <div className="container">
@@ -131,7 +146,8 @@ const App = () => {
         </div>
         <div >
           <h2>View tasks</h2>
-          <TodoList todos={todos} delTask={delTask} editRow={editRow} completeTask={completeTask}/>
+          <Filter filter={filter} setFilter={setFilter} />
+            <TodoList todos={filteredList} delTask={delTask} editRow={editRow} completeTask={completeTask} />
         </div>
       </div>
     </div>
