@@ -28,7 +28,7 @@ app.get('/todos', async (req, res) => {
 
 app.post('/todos/insert', async (req, res) => {
     try {
-        let result = await db.inserIntoTable(req.body.task, req.body.notes)
+        let result = await db.inserIntoTable(req.body.task, req.body.notes, req.body.duedate)
         res.json(result.rows[0])
     } catch (error) {
         // console.log(error)
@@ -37,7 +37,7 @@ app.post('/todos/insert', async (req, res) => {
 
 app.put('/todos/update/:id', async (req, res) => {
     try {
-        let result = await db.updateTask(req.params.id, req.body.task, req.body.notes)
+        let result = await db.updateTask(req.params.id, req.body.task, req.body.notes, req.body.duedate)
         console.log(req.params, req.body)
         res.json(result)
     } catch (error) {

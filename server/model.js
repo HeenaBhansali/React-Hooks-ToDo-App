@@ -10,13 +10,12 @@ const pool = new Pool({
 const createTable = async () => {
     try {
         await pool.query(`create table if not exists todo  (
-            id serial primary key,
-            task varchar(30),
-            notes varchar(100),
-            due_date date,
-            priority char(10),
-            status boolean,
-            );
+                id serial primary key,
+                task varchar(30),
+                notes varchar(100),
+                duedate date,
+                priority char(10),
+                status boolean);                
             `)
     } catch (error) {
         console.log('unable to create table', error)
@@ -24,9 +23,13 @@ const createTable = async () => {
    
 }
 
-const inserIntoTable = async (task, notes) => {
+const inserIntoTable = async (task, notes, duedate) => {
+    const insertQuery = {
+        text: 'insert into todo (task, notes, status, duedate) values ($1, $2, false, $3) returning id;',
+        values: [task, notes, duedate]
+ }
     try {
-        let result = await pool.query(`insert into todo (task, notes, status) values ('${task}', '${notes}', false) returning id;`)
+        let result = await pool.query(insertQuery)
         return result
     } catch (error) {
         console.log('unable to insert task into table', error)
@@ -42,10 +45,10 @@ const getTask = async () => {
     }
 }
 
-const updateTask = async (id, task, notes) => {
+const updateTask = async (id, task, notes, duedate) => {
     const updateQuery = {
-        text: 'update todo set task = $1, notes = $2 where id = $3 returning *',
-        values: [task, notes, id]
+        text: 'update todo set task = $1, notes = $2, duedate = $3 where id = $4 returning *',
+        values: [task, notes, duedate, id]
  }
    try {
     let result = await pool.query(updateQuery)
