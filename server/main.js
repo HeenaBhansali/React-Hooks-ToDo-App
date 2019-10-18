@@ -1,9 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const db = process.argv
-if (db[2] === 'postgres') require('./model')
-else if (db[2] === 'redis') require('../redis/redisModel.js')
+// const db = require('./postgresModel')
+// const db =require('./redisModel')
+let db = require(`./${process.argv[2]}Model`)
+if (db[2] === 'postgres') db = require('./postgresModel')
+else if (db[2] === 'redis') db = require('./redisModel')
 console.log(db[2])
 const port = 3001
 
