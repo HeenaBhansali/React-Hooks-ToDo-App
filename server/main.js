@@ -1,8 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const db = require('./model')
-// const db = require('/home/heena/project/react/React ToDo/reactHooks ToDo/React-Hooks-ToDo-App/redis/redisModel.js')
+const db = process.argv
+if (db[2] === 'postgres') require('./model')
+else if (db[2] === 'redis') require('../redis/redisModel.js')
+console.log(db[2])
 const port = 3001
 
 app.use(function (req, res, next) {
