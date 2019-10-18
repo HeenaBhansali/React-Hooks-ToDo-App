@@ -1,10 +1,12 @@
+require('dotenv').config()
 const Pool = require('pg').Pool
+
 const pool = new Pool({
-  user: 'heena',
-  host: 'localhost',
-  database: '',
-  password: '',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 })
 
 const createTable = async () => {
@@ -38,7 +40,7 @@ const inserIntoTable = async (task, notes, duedate) => {
 
 const getTask = async () => {
     try {
-        let result = await pool.query(`select * from todo order by id ASC;`)
+        let result = await pool.query(`select * from todo order by duedate ASC;`)
         return result.rows
     } catch (error) {
         console.log('unable to get list of task', error)

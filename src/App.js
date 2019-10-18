@@ -63,7 +63,7 @@ const App = () => {
 
   const editRow = todo => {
     setEditing(true)
-    setCurrentTask({ id: todo.id, task: todo.task, notes: todo.notes, duedate: todo.duedate })
+    setCurrentTask({ id: todo.id, task: todo.task, notes: todo.notes, duedate: todo.duedate, status: todo.status })
   }
 
   const updateTask = (id, updatedTask) => {
@@ -77,7 +77,8 @@ const App = () => {
       body: JSON.stringify({
         task: updatedTask.task,
         notes: updatedTask.notes,
-        duedate: updatedTask.duedate
+        duedate: updatedTask.duedate,
+        status: updateTask.status
       })
     })
       .then(resp => resp.json())
@@ -89,7 +90,7 @@ const App = () => {
 
   const completeTask = (todo) => {
     console.log("todo", todo)
-    const { id, status } = todo
+    const { id,task,notes,duedate, status } = todo
     setEditing(false)
     fetch(`http://localhost:3001/todos/status/${id}`, {
       method: "PUT",
@@ -99,6 +100,9 @@ const App = () => {
       },
 
       body: JSON.stringify({
+        task,
+        notes,
+        duedate,
         status: !status
       })
     })

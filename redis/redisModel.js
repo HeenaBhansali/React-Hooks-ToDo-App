@@ -18,7 +18,6 @@ const getCount = () => {
         client.get('count', (err, obj) => {
             resolve (obj)
     })
-
     })
 }
 
@@ -28,7 +27,8 @@ const inserIntoTable = async (task,notes,duedate) => {
         id,
         task,
         notes,
-        duedate
+        duedate,
+        status : false
     }
     return new Promise ( (resolve, reject) => {
         client.zadd('todos', id,JSON.stringify(todo), (err, obj) => {
@@ -41,38 +41,66 @@ const inserIntoTable = async (task,notes,duedate) => {
 }
 
 const getTask = () => {
-      client.zrange('todos', 0, -1, 'withscores', (err, obj) => {
-         console.log(obj.map(JSON.parse))
-     })
+    return new Promise ( (resolve, reject) => {
+        client.zrange('todos',  0, -1, (err, obj) => {
+            resolve (obj.map(JSON.parse))
+    })
+    })
 }
 
 const deleteTask = (id) => {
-    client.zremrangebyscore('todos', id, id)
-
+    return new Promise ( (resolve, reject) => {
+        client.zremrangebyscore('todos', id, id, (err, obj) => {
+            resolve (obj)
+    })
+    })
 }
-const updateTask = (id,task,notes,duedate) => {
+const updateTask = (id,task,notes,duedate,status) => {
     client.zremrangebyscore('todos', id, id)
     let todo ={
         id: `${id}`,
         task,
         notes,
-        duedate
+        duedate,
+        status
     }
-    client.zadd('todos', id, JSON.stringify(todo))
+    return new Promise ( (resolve, reject) => {
+        client.zadd('todos', id, JSON.stringify(todo), (err, obj) => {
+            resolve (obj)
+    })
+    })
 }
-inserIntoTable("taskbbb","notes","status","date")
+
+const taskStatus = (id,status,task,notes,duedate) => {
+    client.zremrangebyscore('todos', id, id)
+    let todo ={
+        id: `${id}`,
+        task,
+        notes,
+        duedate,
+        status
+    }
+    return new Promise ( (resolve, reject) => {
+        client.zadd('todos', id, JSON.stringify(todo), (err, obj) => {
+            resolve (obj)
+    })
+    })
+}
+
+// inserIntoTable("taskbbb","notes","status","date")
 // updateTask(3, "taskkk","notesss")
 // // insertTask("t","notes","status","date")
 // // insertTask("tk","notes","status","date")
 // // insertTask("tk","notes","status","date")
 
 // delTask(9)
-getTask()
-// init()
+// getTask()
+init()
 module.exports = {
     updateTask,
     getTask,
     inserIntoTable,
-    deleteTask
+    deleteTask,
+    taskStatus
 }
 
